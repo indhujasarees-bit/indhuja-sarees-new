@@ -1,6 +1,6 @@
 window.INDHUJA_CONFIG={
-SUPABASE_URL:"PASTE_YOUR_SUPABASE_URL_HERE",
-SUPABASE_KEY:"PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE",
+SUPABASE_URL:"https://yjhcpewltgbzaryygoky.supabase.co/rest/v1/",
+SUPABASE_KEY:"sb_publishable_8tB_apNqMa81EJB9czdTPg_ZekhxfZd",
 WHATSAPP_NUMBER:"919384067311",
 SHOP_NAME:"Indhuja Saree's",
 LOCATION:"Ilampillai, Salem",
