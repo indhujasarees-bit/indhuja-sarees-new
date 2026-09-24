@@ -1,1 +1,10 @@
 
+window.INDHUJA_CONFIG={
+SUPABASE_URL:"PASTE_YOUR_SUPABASE_URL_HERE",
+SUPABASE_KEY:"PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE",
+WHATSAPP_NUMBER:"919384067311",
+SHOP_NAME:"Indhuja Saree's",
+LOCATION:"Ilampillai, Salem",
+INSTAGRAM_URL:"https://www.instagram.com/indhujachinraj/",
+FACEBOOK_URL:"https://www.facebook.com/share/1Q7Yv6K7vt/"
+};
