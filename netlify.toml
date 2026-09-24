@@ -1,1 +1,9 @@
 
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/customer/"
+  status = 200
+  
