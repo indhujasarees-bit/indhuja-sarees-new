@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Indhuja Easy Admin</title><link rel="stylesheet" href="style.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script></head><body><section id="login" class="login"><div class="loginbox"><b>IS</b><i>INDHUJA SAREE'S</i><h1>Easy Admin</h1><input id="email" placeholder="Admin email" type="email"><input id="password" placeholder="Password" type="password"><button id="loginBtn">LOGIN</button><small id="msg"></small></div></section><section id="app" hidden><header><div><i>INDHUJA SAREE'S</i><h1>Easy Admin</h1></div><button id="logout">Logout</button></header><main><div class="stats"><div><b id="total">0</b>Total Sarees</div><div><b id="active">0</b>Active</div><div><b id="collectionsCount">0</b>Collections</div></div><section class="panel bulk"><i>FASTEST WAY</i><h2>Upload many sarees</h2><p>Select multiple photos once. Choose collection + common price + code prefix.</p><select id="bulkCollection"><option>Select collection</option></select><input id="bulkPrice" type="number" placeholder="Common price"><input id="bulkPrefix" placeholder="Code prefix e.g. KS"><label>Choose 20+ photos<input id="bulkPhotos" type="file" accept="image/*" multiple></label><button id="bulkSave">UPLOAD ALL SAREES</button><small id="bulkMsg"></small></section><section class="panel"><div class="title"><h2>Add / Edit Saree</h2><button id="clear">Clear</button></div><input id="editid" type="hidden"><input id="code" placeholder="Saree code"><input id="pname" placeholder="Saree model name"><select id="category"><option>Select collection</option></select><input id="price" type="number" placeholder="Price"><textarea id="desc" placeholder="Saree details"></textarea><label>Choose photo<input id="photo" type="file" accept="image/*"></label><button id="save">SAVE SAREE</button></section><section class="panel home-editor">
+  <div class="title"><div><i>WEBSITE CONTENT</i><h2>Home Page Editor</h2></div><button id="homeReset" type="button">Reset Preview</button></div>
+  <p>Edit the words shown on your customer home page. Save pannina website-la update aagum.</p>
+  <div class="home-fields">
+    <label>Hero small heading<input id="set_heroKicker" placeholder="OWN MANUFACTURING · PREMIUM WEAVES"></label>
+    <label>Main heading<input id="set_heroTitle" placeholder="Luxury, woven by us."></label>
+    <label>Hero description<textarea id="set_heroText"></textarea></label>
+    <label>Hero button text<input id="set_heroButton" placeholder="EXPLORE COLLECTIONS →"></label>
+    <label>Trust 1 title<input id="set_trust1Title"></label><label>Trust 1 small text<input id="set_trust1Text"></label>
+    <label>Trust 2 title<input id="set_trust2Title"></label><label>Trust 2 small text<input id="set_trust2Text"></label>
+    <label>Trust 3 title<input id="set_trust3Title"></label><label>Trust 3 small text<input id="set_trust3Text"></label>
+    <label>Trust 4 title<input id="set_trust4Title"></label><label>Trust 4 small text<input id="set_trust4Text"></label>
+    <label>Offer Zone small heading<input id="set_offerKicker"></label><label>Offer Zone title<input id="set_offerHeading"></label><label>Offer Zone description<input id="set_offerIntro"></label>
+    <label>Collections small heading<input id="set_collectionsKicker"></label><label>Collections title<input id="set_collectionsHeading"></label><label>Collections description<input id="set_collectionsIntro"></label>
+    <label>Our Story small heading<input id="set_storyKicker"></label><label>Our Story title<input id="set_storyHeading"></label><label>Our Story description<textarea id="set_storyText"></textarea></label>
+    <label>Contact small heading<input id="set_contactKicker"></label><label>Contact title<input id="set_contactHeading"></label><label>Contact description<textarea id="set_contactText"></textarea></label>
+    <label>Footer text<input id="set_footerText"></label>
+  </div>
+  <h3>Show / Hide Home Sections</h3>
+  <div class="home-toggles"><label><input type="checkbox" id="show_hero" checked> Hero Banner</label><label><input type="checkbox" id="show_trust" checked> Trust Highlights</label><label><input type="checkbox" id="show_offers" checked> Offer Zone (still requires active offers)</label><label><input type="checkbox" id="show_collections" checked> Collections</label><label><input type="checkbox" id="show_story" checked> Our Story</label><label><input type="checkbox" id="show_contact" checked> Contact Section</label></div>
+  <button id="homeSave">SAVE HOME PAGE CHANGES</button><small id="homeMsg"></small>
+</section>
+<section class="panel offer-admin">
+  <div class="title"><div><i>OPTIONAL</i><h2>Offer Zone</h2></div></div>
+  <p>Offer இல்லாத போது OFF பண்ணு. Offer இருந்தால் image + title add பண்ணி ON பண்ணு.</p>
+  <div class="offer-form">
+    <input id="offerTitle" placeholder="Offer title e.g. Weekend Offer">
+    <input id="offerSubtitle" placeholder="Offer text e.g. Selected sarees from ₹499">
+    <input id="offerLink" placeholder="Optional link / WhatsApp link">
+    <label>Choose offer image<input id="offerPhoto" type="file" accept="image/*"></label>
+  </div>
+  <button id="offerSave">SAVE OFFER</button>
+  <div id="offerList"></div>
+</section>
+<section class="panel"><h2>Collections</h2><div class="add"><input id="newcat" placeholder="New collection name"><button id="addcat">ADD COLLECTION</button></div><div id="cats"></div></section><section class="panel"><div class="title"><h2>All Sarees</h2><input id="search" placeholder="Search"></div><div id="list"></div></section></main></section><script src="app.js"></script></body></html>
