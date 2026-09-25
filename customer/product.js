@@ -8,13 +8,46 @@ const sb = supabase.createClient(
 
 const id = new URLSearchParams(location.search).get("id");
 
-// WhatsApp number
 const phone = C.WHATSAPP_NUMBER;
+
+const CART_KEY = "indhuja_cart";
 
 // Default WhatsApp link
 wa.href = `https://wa.me/${phone}`;
 
+// Get existing cart
+function getCart() {
+  try {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+// Save cart
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+// Cart count
+function updateCartCount() {
+  const cart = getCart();
+
+  const count = cart.reduce(
+    (sum, item) => sum + item.qty,
+    0
+  );
+
+  const el = document.getElementById("cartCount");
+
+  if (el) {
+    el.textContent = count;
+    el.style.display = count ? "inline-flex" : "none";
+  }
+}
+
 async function run() {
+
   const { data: x, error } = await sb
     .from("products")
     .select("*,collections(name)")
@@ -33,7 +66,7 @@ async function run() {
 
   const price = Number(x.price).toLocaleString("en-IN");
 
-  // WhatsApp order message with image URL
+  // WhatsApp order message
   const message =
     `Hi Indhuja Saree's! 👋\n\n` +
     `I would like to order this saree.\n\n` +
@@ -87,6 +120,30 @@ async function run() {
           Saree Code: ${x.code || "N/A"}
         </p>
 
+        <!-- ADD TO CART BUTTON -->
+        <button
+          type="button"
+          id="addToCartBtn"
+          class="cart-btn"
+        >
+          🛒 ADD TO CART
+        </button>
+
+        <p
+          id="cartMessage"
+          class="cart-message"
+        ></p>
+
+        <!-- VIEW CART -->
+        <a
+          href="cart.html"
+          class="view-cart-btn"
+        >
+          VIEW CART / CHECKOUT
+          <span id="cartCount">0</span>
+        </a>
+
+        <!-- EXISTING WHATSAPP ORDER -->
         <a
           class="order-btn"
           href="${whatsappLink}"
@@ -128,6 +185,7 @@ async function run() {
         width: 100%;
         height: 600px;
         object-fit: contain;
+        cursor: zoom-in;
       }
 
       .no-image {
@@ -169,6 +227,65 @@ async function run() {
         font-size: 14px;
       }
 
+      /* ADD TO CART */
+      .cart-btn {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background: #b88a35;
+        color: white;
+        padding: 18px 24px;
+        border: none;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        margin-top: 25px;
+        cursor: pointer;
+      }
+
+      .cart-btn:hover {
+        background: #9b7128;
+      }
+
+      .cart-message {
+        color: #237544;
+        font-size: 14px;
+        font-weight: bold;
+        min-height: 18px;
+        margin: 10px 0;
+      }
+
+      /* VIEW CART */
+      .view-cart-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f1e6d5;
+        color: #65152e;
+        padding: 16px 22px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid #d8c5a6;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+
+      #cartCount {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 25px;
+        height: 25px;
+        padding: 0 6px;
+        border-radius: 50%;
+        background: #65152e;
+        color: white;
+      }
+
+      /* WHATSAPP ORDER */
       .order-btn {
         display: flex;
         align-items: center;
@@ -182,7 +299,7 @@ async function run() {
         font-weight: bold;
         letter-spacing: 1px;
         border-radius: 4px;
-        margin-top: 25px;
+        margin-top: 15px;
       }
 
       .order-btn:hover {
@@ -220,6 +337,40 @@ async function run() {
       }
     </style>
   `;
+
+  // ADD TO CART ACTION
+  document
+    .getElementById("addToCartBtn")
+    .addEventListener("click", () => {
+
+      const cart = getCart();
+
+      const existing = cart.find(
+        item => String(item.id) === String(x.id)
+      );
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: x.id,
+          name: x.name,
+          code: x.code || "",
+          price: Number(x.price),
+          image_url: x.image_url || "",
+          collection: x.collections?.name || "",
+          qty: 1
+        });
+      }
+
+      saveCart(cart);
+      updateCartCount();
+
+      document.getElementById("cartMessage").textContent =
+        "✓ Saree added to your cart!";
+    });
+
+  updateCartCount();
 }
 
 run();
