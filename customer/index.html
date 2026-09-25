@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,6 +14,139 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../config.js"></script>
+
+<!-- CART ICON DESIGN -->
+<style>
+/* Header layout */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Cart button */
+.header-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 13px;
+  background: #fff8ed;
+  color: #701735;
+  border: 1px solid #d6b66a;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header-cart:hover {
+  background: #701735;
+  color: white;
+  border-color: #701735;
+}
+
+/* Shopping bag icon */
+.header-cart svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+/* Cart quantity badge */
+#headerCartCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  background: #701735;
+  color: white;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.header-cart:hover #headerCartCount {
+  background: white;
+  color: #701735;
+}
+
+/* Mobile header */
+@media (max-width: 600px) {
+
+  header {
+    gap: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .brand b {
+    font-size: 11px;
+  }
+
+  .brand small {
+    font-size: 8px;
+  }
+
+  header nav {
+    gap: 8px;
+  }
+
+  header nav a {
+    font-size: 10px;
+  }
+
+  .header-cart {
+    padding: 8px 9px;
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .header-cart svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  #headerCartCount {
+    min-width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+
+  header .wa {
+    font-size: 9px;
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 380px) {
+
+  header nav {
+    display: none;
+  }
+
+  .header-cart {
+    padding: 8px;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -35,6 +168,30 @@
     <a href="#contact">Contact</a>
   </nav>
 
+  <!-- NEW CART BUTTON -->
+  <a href="cart.html" class="header-cart" aria-label="View shopping cart">
+
+    <!-- Shopping bag icon -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M5 8h14l1 13H4L5 8z"/>
+      <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+    </svg>
+
+    <span>Cart</span>
+
+    <span id="headerCartCount">0</span>
+
+  </a>
+
+  <!-- WHATSAPP -->
   <a id="wa" class="wa">WHATSAPP</a>
 
 </header>
@@ -62,7 +219,7 @@
 
   </div>
 
-  <!-- HERO IMAGE: ADMIN UPLOAD IMAGE WILL SHOW HERE -->
+  <!-- HERO IMAGE -->
   <div class="fabric" id="heroFabric">
 
     <span id="heroPlaceholder">INDHUJA</span>
@@ -201,6 +358,56 @@
 <footer id="footerText">
   © Indhuja Saree's · Own Manufacturing · Ilampillai, Salem
 </footer>
+
+<!-- CART COUNT SCRIPT -->
+<script>
+(function () {
+
+  const CART_KEY = "indhuja_cart";
+
+  function updateHeaderCart() {
+
+    let cart = [];
+
+    try {
+      cart = JSON.parse(
+        localStorage.getItem(CART_KEY) || "[]"
+      );
+
+      if (!Array.isArray(cart)) {
+        cart = [];
+      }
+
+    } catch (error) {
+      cart = [];
+    }
+
+    const count = cart.reduce(function (total, item) {
+      return total + Math.max(0, Number(item.qty) || 0);
+    }, 0);
+
+    const badge = document.getElementById("headerCartCount");
+
+    if (badge) {
+      badge.textContent = count;
+    }
+  }
+
+  // Update count when homepage opens
+  updateHeaderCart();
+
+  // Update when returning to homepage
+  window.addEventListener("pageshow", updateHeaderCart);
+
+  // Update when cart changes in another browser tab
+  window.addEventListener("storage", function (event) {
+    if (event.key === CART_KEY || event.key === null) {
+      updateHeaderCart();
+    }
+  });
+
+})();
+</script>
 
 <!-- CUSTOMER HOMEPAGE SCRIPT -->
 <script src="home.js"></script>
