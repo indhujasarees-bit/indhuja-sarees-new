@@ -1,0 +1,4 @@
+const C=window.INDHUJA_CONFIG;let db;const $=id=>document.getElementById(id);
+function init(){if(!C?.SUPABASE_URL||!C?.SUPABASE_KEY){$('msg').textContent='Update config.js';return false}db=supabase.createClient(C.SUPABASE_URL,C.SUPABASE_KEY);return true}
+$('loginBtn').onclick=async()=>{if(!init())return;const email=$('email').value.trim(),password=$('password').value;if(!email||!password){$('msg').textContent='Email and password enter pannunga.';return}$('loginBtn').disabled=true;$('msg').textContent='Logging in…';const {error}=await db.auth.signInWithPassword({email,password});if(error){$('msg').textContent=error.message;$('loginBtn').disabled=false;return}location.replace('dashboard.html')};
+(async()=>{if(init()){const {data}=await db.auth.getSession();if(data.session)location.replace('dashboard.html')}})();
