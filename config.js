@@ -1,5 +1,5 @@
 window.INDHUJA_CONFIG={
-SUPABASE_URL:"https://yjhcpewltgbzaryygoky.supabase.co/rest/v1/",
+SUPABASE_URL:"https://yjhcpewltgbzaryygoky.supabase.co",
 SUPABASE_KEY:"sb_publishable_8tB_apNqMa81EJB9czdTPg_ZekhxfZd",
 WHATSAPP_NUMBER:"919384067311",
 SHOP_NAME:"Indhuja Saree's",
