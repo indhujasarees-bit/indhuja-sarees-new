@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | Indhuja Saree's</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: #f7f1e8;
+      color: #29161e;
+      font-family: "DM Sans", Arial, sans-serif;
+    }
+
+    .cart-container {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .cart-heading {
+      font: 42px Georgia, serif;
+      color: #65152e;
+      margin-bottom: 10px;
+    }
+
+    .cart-subtitle {
+      color: #7a696e;
+      margin-bottom: 30px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 18px;
+      background: white;
+      padding: 16px;
+      border: 1px solid #e5d8d0;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+
+    .cart-item img {
+      width: 110px;
+      height: 130px;
+      object-fit: contain;
+      background: #f7f1e8;
+    }
+
+    .cart-item h3 {
+      font: 22px Georgia, serif;
+      margin: 0 0 8px;
+    }
+
+    .cart-item p {
+      color: #75666b;
+      font-size: 13px;
+      margin: 6px 0;
+    }
+
+    .cart-price {
+      color: #65152e;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .qty-controls button {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #d8c5a6;
+      background: #f7f1e8;
+      color: #65152e;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .remove-btn {
+      color: #a12636;
+      background: none;
+      border: none;
+      padding: 8px 0;
+      margin-top: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .cart-summary {
+      background: white;
+      padding: 25px;
+      border: 1px solid #e5d8d0;
+      margin-top: 25px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0;
+      font-size: 16px;
+    }
+
+    .summary-total {
+      border-top: 1px solid #e5d8d0;
+      padding-top: 18px;
+      font-size: 23px;
+      font-weight: bold;
+      color: #65152e;
+    }
+
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      background: #65152e;
+      color: white;
+      padding: 18px;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      margin-top: 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .continue-btn {
+      display: block;
+      text-align: center;
+      color: #65152e;
+      margin-top: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .empty-cart {
+      background: white;
+      padding: 50px 20px;
+      text-align: center;
+      border: 1px solid #e5d8d0;
+    }
+
+    .empty-cart h2 {
+      font: 28px Georgia, serif;
+      color: #65152e;
+    }
+
+    @media(max-width:600px) {
+      .cart-container {
+        padding: 15px;
+        margin: 15px auto;
+      }
+
+      .cart-heading {
+        font-size: 34px;
+      }
+
+      .cart-item {
+        grid-template-columns: 85px 1fr;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .cart-item img {
+        width: 85px;
+        height: 115px;
+      }
+
+      .cart-item h3 {
+        font-size: 18px;
+      }
+
+      .cart-price {
+        font-size: 16px;
+      }
+
+      .cart-summary {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="brand">
+      <span>IS</span>
+      <div>
+        <b>Indhuja Saree's</b>
+        <small>ILAMPILLAI WEAVES</small>
+      </div>
+    </a>
+
+    <a href="index.html" class="wa">
+      CONTINUE SHOPPING
+    </a>
+  </header>
+
+  <main class="cart-container">
+
+    <h1 class="cart-heading">Your Shopping Cart</h1>
+
+    <p class="cart-subtitle">
+      Review your sarees and place your order through WhatsApp.
+    </p>
+
+    <div id="cartItems"></div>
+
+    <div id="cartSummary"></div>
+
+    <a href="index.html" class="continue-btn">
+      ← CONTINUE SHOPPING
+    </a>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../config.js"></script>
+  <script src="cart.js"></script>
+
+</body>
+</html>
