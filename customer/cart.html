@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Shopping Cart | Indhuja Saree's</title>
 
   <link rel="stylesheet" href="style.css">
@@ -13,6 +14,44 @@
       background: #f7f1e8;
       color: #29161e;
       font-family: "DM Sans", Arial, sans-serif;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px 15px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-cart {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      color: #65152e;
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    #headerCartCount {
+      background: #8b1e3f;
+      color: white;
+      border-radius: 50%;
+      min-width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
     }
 
     .cart-container {
@@ -153,6 +192,22 @@
     }
 
     @media(max-width:600px) {
+      header {
+        padding: 12px;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .header-cart {
+        font-size: 12px;
+      }
+
+      header .wa {
+        font-size: 12px;
+      }
+
       .cart-container {
         padding: 15px;
         margin: 15px auto;
@@ -199,9 +254,18 @@
       </div>
     </a>
 
-    <a href="index.html" class="wa">
-      CONTINUE SHOPPING
-    </a>
+    <div class="header-actions">
+
+      <a href="cart.html" class="header-cart">
+        🛍️ Cart
+        <span id="headerCartCount">0</span>
+      </a>
+
+      <a href="index.html" class="wa">
+        WHATSAPP
+      </a>
+
+    </div>
   </header>
 
   <main class="cart-container">
@@ -221,6 +285,31 @@
     </a>
 
   </main>
+
+  <script>
+    function updateHeaderCartCount() {
+      try {
+        const cart = JSON.parse(
+          localStorage.getItem("indhuja_cart") || "[]"
+        );
+
+        const count = cart.reduce(
+          (total, item) => total + Number(item.qty || 1),
+          0
+        );
+
+        const badge = document.getElementById("headerCartCount");
+
+        if (badge) {
+          badge.textContent = count;
+        }
+      } catch (error) {
+        console.log("Cart count error", error);
+      }
+    }
+
+    updateHeaderCartCount();
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../config.js"></script>
