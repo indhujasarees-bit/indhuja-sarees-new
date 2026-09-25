@@ -1,2 +1,288 @@
 *{box-sizing:border-box}body{margin:0;background:#f7f1e8;color:#29161e;font-family:"DM Sans",sans-serif}header{height:76px;background:#fff;border-bottom:1px solid #e6d9d0;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:5}.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:#29161e}.brand span{border:1px solid #b88a35;color:#b88a35;padding:10px;font-family:Georgia}.brand b{font:18px Georgia}.brand small{display:block;font:8px Arial;letter-spacing:.3em;color:#8b777d;margin-top:3px}nav{display:flex;gap:28px}nav a{color:#29161e;text-decoration:none;font-size:13px}.wa{background:#65152e;color:white!important;padding:13px 18px;font-size:11px;text-decoration:none}.hero{min-height:610px;padding:90px 7%;display:grid;grid-template-columns:1fr 1fr;align-items:center;background:linear-gradient(115deg,#35101e,#771d3b 60%,#a14755);color:white}.hero i,.section>i,.story i,.contact i{font-style:normal;font-size:10px;letter-spacing:.28em;color:#d8b76d;font-weight:bold}.hero h1{font:600 clamp(55px,7vw,90px)/.95 Georgia;margin:20px 0}.hero em,.story em{color:#dfbd77;font-weight:500}.hero p{max-width:520px;font-size:18px;line-height:1.7;color:#f3e7e9}.gold{display:inline-block;background:#b88a35;color:white;text-decoration:none;padding:16px 22px;margin-top:20px;font-size:11px;font-weight:bold;letter-spacing:.08em}.fabric{height:430px;width:min(380px,80%);justify-self:center;display:grid;place-items:end;padding:30px;background:linear-gradient(145deg,#d19c43,#6b1733 48%,#eac26c);font:28px Georgia;letter-spacing:.18em;box-shadow:25px 25px #0002}.trust{display:grid;grid-template-columns:repeat(4,1fr);background:white;border-bottom:1px solid #e6d9d0}.trust div{padding:24px 7%;border-right:1px solid #e6d9d0;display:flex;gap:12px}.trust b{color:#b88a35}.trust strong{font-size:13px}.trust small{display:block;color:#8a777d;font-size:11px;margin-top:4px}.section{padding:95px 6%;text-align:center}.section h2,.contact h2{font:50px Georgia;margin:12px 0}.section>p,.contact p{color:#7a696e}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:45px;text-align:left}.card{background:white;border:1px solid #e5d8d0;text-decoration:none;color:#29161e}.pic{height:290px;background:linear-gradient(135deg,#ddd,#8b2946);display:grid;place-items:center;color:white;font:24px Georgia;text-align:center}.info{padding:18px}.info h3{font:21px Georgia;margin:7px 0}.view{color:#65152e;font-size:11px;font-weight:bold}.story{display:grid;grid-template-columns:1fr 1fr;background:#2d111c;color:white;min-height:500px}.loom{display:grid;place-items:center;background:linear-gradient(135deg,#5e1830,#c49a57);font:11px Arial;letter-spacing:.3em}.loom b{font:38px Georgia;letter-spacing:.05em}.story>div:last-child{padding:80px 10%;align-self:center}.story h2{font:50px Georgia}.story p{line-height:1.8;color:#eadbdd}.contact{text-align:center;padding:100px 6%;background:white}footer{text-align:center;padding:25px;color:#8a777d;font-size:11px}@media(max-width:800px){nav{display:none}.hero{grid-template-columns:1fr;padding:65px 25px}.fabric{display:none}.trust{grid-template-columns:1fr 1fr}.trust div{padding:18px 15px}.grid{grid-template-columns:1fr 1fr;gap:10px}.pic{height:210px}.story{grid-template-columns:1fr}.loom{min-height:260px}.story>div:last-child{padding:55px 25px}.section h2,.contact h2,.story h2{font-size:40px}}
 .offers{padding:75px 6%;background:#fff}.offer-head{text-align:center}.offer-head span{font-size:10px;letter-spacing:.28em;color:#b88a35;font-weight:bold}.offer-head h2{font:48px Georgia;margin:10px 0}.offer-head p{color:#7a696e}.offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:35px}.offer-card{background:#f7f1e8;border:1px solid #e5d8d0;overflow:hidden}.offer-card img{width:100%;height:250px;object-fit:cover;display:block}.offer-copy{padding:20px}.offer-copy h3{font:25px Georgia;margin:0 0 8px}.offer-copy p{color:#75666b;line-height:1.5}.offer-btn{display:inline-block;margin-top:8px;background:#65152e;color:#fff;text-decoration:none;padding:12px 17px;font-size:10px;font-weight:bold}@media(max-width:800px){.offers{padding:65px 18px}.offer-head h2{font-size:40px}.offers-grid{grid-template-columns:1fr}}
+
+/* =====================================
+   INDHUJA SAREES - PREMIUM UPDATE
+   ===================================== */
+
+/* PREMIUM HERO BANNER */
+
+.hero {
+  min-height: 620px;
+  grid-template-columns: 1fr 1fr;
+  gap: 45px;
+  overflow: hidden;
+}
+
+.hero > div:first-child {
+  max-width: 600px;
+}
+
+.fabric {
+  width: min(100%, 460px);
+  height: 500px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    145deg,
+    #d19c43,
+    #6b1733 48%,
+    #eac26c
+  );
+  box-shadow: 20px 20px 0 #0002;
+}
+
+#heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+#heroPlaceholder {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  color: white;
+  font: 24px Georgia;
+  letter-spacing: .18em;
+  text-shadow: 0 2px 10px #0005;
+}
+
+/* COLLECTION PRODUCT IMAGES */
+
+.grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px #29161e18;
+}
+
+.pic {
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.info {
+  padding: 18px;
+}
+
+.info h3 {
+  line-height: 1.3;
+}
+
+.view {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* WHATSAPP BUTTON */
+
+.wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 3px;
+  font-weight: bold;
+  transition: background .2s ease;
+}
+
+.wa:hover {
+  background: #4d1023;
+}
+
+.gold {
+  transition: background .2s ease, transform .2s ease;
+}
+
+.gold:hover {
+  background: #9b7128;
+  transform: translateY(-2px);
+}
+
+/* MOBILE PREMIUM LAYOUT */
+
+@media (max-width: 800px) {
+
+  header {
+    height: 65px;
+    padding: 0 15px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand b {
+    font-size: 15px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .header .wa {
+    padding: 10px 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 45px 22px 55px;
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 12vw, 64px);
+    line-height: .98;
+    margin: 18px 0;
+  }
+
+  .hero p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* IMPORTANT: Show hero photo on mobile */
+
+  .fabric {
+    display: grid;
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    justify-self: center;
+    margin: 0 auto;
+    box-shadow: 10px 10px 0 #0002;
+  }
+
+  #heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #heroPlaceholder {
+    font-size: 20px;
+    bottom: 18px;
+    right: 18px;
+  }
+
+  .trust {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trust div {
+    padding: 16px 12px;
+    gap: 8px;
+  }
+
+  .trust strong {
+    font-size: 12px;
+  }
+
+  .trust small {
+    font-size: 10px;
+  }
+
+  .section {
+    padding: 65px 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .pic {
+    height: auto;
+    aspect-ratio: 3 / 4;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .info {
+    padding: 12px;
+  }
+
+  .info h3 {
+    font-size: 17px;
+  }
+
+  .info small {
+    font-size: 11px;
+  }
+
+  .view {
+    font-size: 10px;
+  }
+
+  .offers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-card img {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .story {
+    grid-template-columns: 1fr;
+  }
+
+  .loom {
+    min-height: 250px;
+  }
+
+  .story > div:last-child {
+    padding: 45px 22px;
+  }
+
+  .contact {
+    padding: 65px 20px;
+  }
+
+}
+
+/* SMALL MOBILE PHONES */
+
+@media (max-width: 380px) {
+
+  .hero {
+    padding: 35px 16px 45px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .grid {
+    gap: 8px;
+  }
+
+  .info {
+    padding: 10px;
+  }
+
+  .info h3 {
+    font-size: 15px;
+  }
+
+}
