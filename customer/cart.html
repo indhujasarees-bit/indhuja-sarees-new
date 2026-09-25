@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <title>Shopping Cart | Indhuja Saree's</title>
 
@@ -245,75 +245,46 @@
 
 <body>
 
-  <header>
-    <a href="index.html" class="brand">
-      <span>IS</span>
-      <div>
-        <b>Indhuja Saree's</b>
-        <small>ILAMPILLAI WEAVES</small>
-      </div>
-    </a>
-
-    <div class="header-actions">
-
-      <a href="cart.html" class="header-cart">
-        🛍️ Cart
-        <span id="headerCartCount">0</span>
-      </a>
-
-      <a href="index.html" class="wa">
-        WHATSAPP
-      </a>
-
+<header>
+  <a href="index.html" class="brand">
+    <span>IS</span>
+    <div>
+      <b>Indhuja Saree's</b>
+      <small>ILAMPILLAI WEAVES</small>
     </div>
-  </header>
+  </a>
 
-  <main class="cart-container">
-
-    <h1 class="cart-heading">Your Shopping Cart</h1>
-
-    <p class="cart-subtitle">
-      Review your sarees and place your order through WhatsApp.
-    </p>
-
-    <div id="cartItems"></div>
-
-    <div id="cartSummary"></div>
-
-    <a href="index.html" class="continue-btn">
-      ← CONTINUE SHOPPING
+  <div class="header-actions">
+    <a href="cart.html" class="header-cart">
+      🛍️ Cart
+      <span id="headerCartCount">0</span>
     </a>
 
-  </main>
+    <a href="index.html" class="wa">
+      WHATSAPP
+    </a>
+  </div>
+</header>
 
-  <script>
-    function updateHeaderCartCount() {
-      try {
-        const cart = JSON.parse(
-          localStorage.getItem("indhuja_cart") || "[]"
-        );
+<main class="cart-container">
+  <h1 class="cart-heading">Your Shopping Cart</h1>
 
-        const count = cart.reduce(
-          (total, item) => total + Number(item.qty || 1),
-          0
-        );
+  <p class="cart-subtitle">
+    Review your sarees and place your order through WhatsApp.
+  </p>
 
-        const badge = document.getElementById("headerCartCount");
+  <div id="cartItems"></div>
+  <div id="cartSummary"></div>
 
-        if (badge) {
-          badge.textContent = count;
-        }
-      } catch (error) {
-        console.log("Cart count error", error);
-      }
-    }
+  <a href="index.html" class="continue-btn">
+    ← CONTINUE SHOPPING
+  </a>
+</main>
 
-    updateHeaderCartCount();
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../config.js"></script>
-  <script src="cart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../config.js"></script>
+<script src="cart-header.js"></script>
+<script src="cart.js"></script>
 
 </body>
 </html>
