@@ -12,6 +12,40 @@ function init(){
   return true;
 }
 
+
+// Upload NEW images to ImageKit. Existing image_url values (old Supabase photos)
+// are left untouched. ImageKit private credentials are never exposed in this file.
+async function uploadToImageKit(file, fileName){
+  if(!file || !file.type?.startsWith("image/")){
+    throw new Error("Please choose a valid image file.");
+  }
+
+  const {data:authData,error:authError}=await db.functions.invoke("imagekit-auth");
+  if(authError) throw new Error("ImageKit authorization failed: "+authError.message);
+  if(!authData?.token || !authData?.signature || !authData?.expire || !authData?.publicKey){
+    throw new Error("ImageKit authorization response is incomplete. Check the imagekit-auth function and its secrets.");
+  }
+
+  const form=new FormData();
+  form.append("file",file);
+  form.append("fileName",fileName || file.name);
+  form.append("publicKey",authData.publicKey);
+  form.append("token",authData.token);
+  form.append("signature",authData.signature);
+  form.append("expire",String(authData.expire));
+
+  const response=await fetch("https://upload.imagekit.io/api/v1/files/upload",{
+    method:"POST",
+    body:form
+  });
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok){
+    throw new Error(result?.message || result?.help || "ImageKit upload failed (HTTP "+response.status+").");
+  }
+  if(!result.url) throw new Error("ImageKit did not return an image URL.");
+  return result.url;
+}
+
 // LOGOUT
 $('logout').onclick=async()=>{
   await db.auth.signOut();
@@ -177,12 +211,12 @@ $("save").onclick=async()=>{
   const f=$("photo").files[0];
 
   if(f){
-    const path=Date.now()+"-"+f.name.replace(/[^a-zA-Z0-9._-]/g,"-");
-    const u=await db.storage.from("sarees").upload(path,f);
-
-    if(u.error)return alert(u.error.message);
-
-    image_url=db.storage.from("sarees").getPublicUrl(path).data.publicUrl;
+    try{
+      const safeName=f.name.replace(/[^a-zA-Z0-9._-]/g,"-");
+      image_url=await uploadToImageKit(f,"saree-"+Date.now()+"-"+safeName);
+    }catch(error){
+      return alert(error.message);
+    }
   }
 
   const row={code,name,collection_id:cid,price,description:desc};
@@ -230,14 +264,14 @@ $("bulkSave").onclick=async()=>{
     const safeName=f.name.replace(/[^a-zA-Z0-9._-]/g,"-");
     const path=batchTag+"-"+i+"-"+safeName;
 
-    const upload=await db.storage.from("sarees").upload(path,f);
-    if(upload.error){
+    let url;
+    try{
+      url=await uploadToImageKit(f,"saree-"+path);
+    }catch(uploadError){
       failed++;
-      msg.textContent=`Uploading ${i+1} of ${fs.length}… (${ok} saved, ${failed} failed)`;
+      msg.textContent=`Uploading ${i+1} of ${fs.length}… (${ok} saved, ${failed} failed): ${uploadError.message}`;
       continue;
     }
-
-    const url=db.storage.from("sarees").getPublicUrl(path).data.publicUrl;
     const row={
       code:pre+String(products.length+i+1).padStart(3,"0"),
       name:model,
@@ -250,8 +284,6 @@ $("bulkSave").onclick=async()=>{
 
     if(result.error){
       failed++;
-      // Avoid leaving an unused uploaded image when product insert fails.
-      await db.storage.from("sarees").remove([path]);
     }else{
       ok++;
     }
@@ -353,13 +385,12 @@ $("offerSave").onclick=async()=>{
   let image_url="";
 
   if(file){
-    const path="offers-"+Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"-");
-
-    const u=await db.storage.from("sarees").upload(path,file);
-
-    if(u.error)return alert(u.error.message);
-
-    image_url=db.storage.from("sarees").getPublicUrl(path).data.publicUrl;
+    try{
+      const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"-");
+      image_url=await uploadToImageKit(file,"offer-"+Date.now()+"-"+safeName);
+    }catch(error){
+      return alert(error.message);
+    }
   }
 
   const {error}=await db.from("offers").insert({
@@ -601,22 +632,9 @@ $('heroImageSave').onclick=async()=>{
   msg.textContent='Uploading Hero image…';
 
   try{
-    // Unique filename so existing product and offer images are untouched.
+    // New hero images go to ImageKit; existing Supabase images remain as-is.
     const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'-');
-    const path='hero-'+Date.now()+'-'+safeName;
-
-    const {error:uploadError}=await db.storage
-      .from('sarees')
-      .upload(path,file,{
-        upsert:false,
-        contentType:file.type
-      });
-
-    if(uploadError)throw uploadError;
-
-    const publicUrl=db.storage
-      .from('sarees')
-      .getPublicUrl(path).data.publicUrl;
+    const publicUrl=await uploadToImageKit(file,'hero-'+Date.now()+'-'+safeName);
 
     // Preserve existing text, visibility and other settings.
     const settings=await getHomeSettings();
@@ -714,4 +732,5 @@ $('heroImageRemove').onclick=async()=>{
 
   await loadHeroImageSettings();
 })();
-           
+
+      
