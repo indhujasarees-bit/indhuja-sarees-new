@@ -202,52 +202,73 @@ $("save").onclick=async()=>{
   }
 };
 
-// BULK UPLOAD SAREES
+// BULK UPLOAD SAREES: shared model, price, collection and description
 $("bulkSave").onclick=async()=>{
   const fs=[...$("bulkPhotos").files];
   const cid=$("bulkCollection").value;
+  const model=$("bulkName").value.trim();
   const price=Number($("bulkPrice").value);
+  const desc=$("bulkDesc").value.trim();
   const pre=$("bulkPrefix").value.trim()||"IS";
 
-  if(!fs.length||!cid||!price){
-    return alert("Select collection, price and photos");
+  if(!fs.length||!cid||!model||!Number.isFinite(price)||price<=0){
+    return alert("Select collection, enter model name and valid price, then choose photos.");
   }
 
-  $("bulkSave").disabled=true;
+  if(!confirm(`Upload ${fs.length} photos as model "${model}" at ₹${price} each?`))return;
 
-  let ok=0;
+  const btn=$("bulkSave");
+  const msg=$("bulkMsg");
+  btn.disabled=true;
+  msg.textContent="Uploading 0 of "+fs.length+"…";
+
+  let ok=0, failed=0;
+  const batchTag=Date.now();
 
   for(let i=0;i<fs.length;i++){
     const f=fs[i];
+    const safeName=f.name.replace(/[^a-zA-Z0-9._-]/g,"-");
+    const path=batchTag+"-"+i+"-"+safeName;
 
-    const path=Date.now()+"-"+i+"-"+f.name.replace(/[^a-zA-Z0-9._-]/g,"-");
-
-    const u=await db.storage.from("sarees").upload(path,f);
-
-    if(u.error)continue;
+    const upload=await db.storage.from("sarees").upload(path,f);
+    if(upload.error){
+      failed++;
+      msg.textContent=`Uploading ${i+1} of ${fs.length}… (${ok} saved, ${failed} failed)`;
+      continue;
+    }
 
     const url=db.storage.from("sarees").getPublicUrl(path).data.publicUrl;
-
-    const name=f.name.replace(/\.[^/.]+$/,"").replace(/[-_]+/g," ");
-
-    const r=await db.from("products").insert({
-      code:pre+String(i+1).padStart(3,"0"),
-      name,
+    const row={
+      code:pre+String(products.length+i+1).padStart(3,"0"),
+      name:model,
       collection_id:cid,
       price,
-      description:"Premium saree from our own manufacturing.",
+      description:desc,
       image_url:url
-    });
+    };
+    const result=await db.from("products").insert(row);
 
-    if(!r.error)ok++;
+    if(result.error){
+      failed++;
+      // Avoid leaving an unused uploaded image when product insert fails.
+      await db.storage.from("sarees").remove([path]);
+    }else{
+      ok++;
+    }
+    msg.textContent=`Uploading ${i+1} of ${fs.length}… (${ok} saved, ${failed} failed)`;
   }
 
-  $("bulkMsg").textContent=ok+" sarees uploaded successfully.";
-  $("bulkSave").disabled=false;
-
-  load();
+  btn.disabled=false;
+  $("bulkPhotos").value="";
+  if(ok===fs.length){
+    msg.textContent=`Success: ${ok} sarees uploaded with the same model details.`;
+  }else{
+    msg.textContent=`Finished: ${ok} uploaded, ${failed} failed. Check Supabase errors/permissions and retry failed photos.`;
+  }
+  await load();
 };
 
+// 
 // SEARCH SAREES
 $("search").oninput=e=>{
   const q=e.target.value.toLowerCase();

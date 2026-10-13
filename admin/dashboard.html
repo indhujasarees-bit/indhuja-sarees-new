@@ -31,26 +31,28 @@
   <div><b id="collectionsCount">0</b>Collections</div>
 </div>
 
-<!-- BULK SAREE UPLOAD -->
+<!-- BULK SAREE UPLOAD: one model/details shared by every selected photo -->
 <section class="panel bulk">
   <i>FASTEST WAY</i>
   <h2>Upload many sarees</h2>
-  <p>Select multiple photos once. Choose collection + common price + code prefix.</p>
+  <p>One model, one price and one description for all selected photos. Each photo becomes a separate saree entry.</p>
 
   <select id="bulkCollection">
-    <option>Select collection</option>
+    <option value="">Select collection</option>
   </select>
 
-  <input id="bulkPrice" type="number" placeholder="Common price">
-  <input id="bulkPrefix" placeholder="Code prefix e.g. KS">
+  <input id="bulkName" type="text" placeholder="Common saree model name (e.g. Royal Silk)" required>
+  <input id="bulkPrice" type="number" min="1" step="1" placeholder="Common price (₹)" required>
+  <textarea id="bulkDesc" placeholder="Common saree details (colour, fabric, border, etc.)" rows="3"></textarea>
+  <input id="bulkPrefix" type="text" placeholder="Code prefix e.g. KS (optional)">
 
   <label>
-    Choose 20+ photos
+    Choose multiple photos
     <input id="bulkPhotos" type="file" accept="image/*" multiple>
   </label>
 
   <button id="bulkSave">UPLOAD ALL SAREES</button>
-  <small id="bulkMsg"></small>
+  <small id="bulkMsg" role="status" aria-live="polite"></small>
 </section>
 
 <!-- ADD / EDIT SAREE -->
