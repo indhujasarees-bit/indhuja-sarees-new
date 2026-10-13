@@ -5,6 +5,29 @@ const sb = supabase.createClient(
   C.SUPABASE_KEY
 );
 
+// Optimize ImageKit images only. Supabase and other image URLs remain unchanged.
+function optimizedImageUrl(imageUrl) {
+  if (!imageUrl) return imageUrl;
+  try {
+    const url = new URL(imageUrl, window.location.href);
+    if (url.hostname !== "ik.imagekit.io") return imageUrl;
+
+    const current = url.searchParams.get("tr");
+    if (!current) {
+      url.searchParams.set("tr", "f-auto,q-80");
+    } else {
+      const parts = current.split(",").map(part => part.trim());
+      if (!parts.includes("f-auto")) parts.push("f-auto");
+      if (!parts.some(part => /^q-\d+$/.test(part))) parts.push("q-80");
+      url.searchParams.set("tr", parts.filter(Boolean).join(","));
+    }
+    return url.toString();
+  } catch {
+    return imageUrl;
+  }
+}
+
+
 const id = new URLSearchParams(location.search).get("id");
 
 wa.href = `https://wa.me/${C.WHATSAPP_NUMBER}`;
@@ -26,7 +49,7 @@ function renderProducts() {
   grid.innerHTML = filtered.map(x => `
     <a class="card" href="product.html?id=${encodeURIComponent(x.id)}">
       <div class="pic">
-        ${x.image_url ? `<img class="zoom-saree" src="${x.image_url}" alt="${x.name || "Saree"}" data-full="${x.image_url}" loading="lazy" style="cursor:zoom-in;width:100%;height:100%;object-fit:cover;">` : ""}
+        ${x.image_url ? `<img class="zoom-saree" src="${optimizedImageUrl(x.image_url)}" alt="${x.name || "Saree"}" data-full="${x.image_url}" loading="lazy" style="cursor:zoom-in;width:100%;height:100%;object-fit:cover;">` : ""}
       </div>
       <div class="info">
         <small>${x.code || ""}</small>
