@@ -56,29 +56,26 @@
       .header-cart { font-size: 12px; }
     }
 
-    /* Collection search, sort and mobile-friendly controls */
+    /* Price sorting control, mobile-friendly */
     .collection-tools {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 220px;
-      gap: 12px;
+      display: flex;
+      justify-content: flex-end;
       margin: 22px 0 18px;
     }
-    .collection-tools input,
     .collection-tools select {
       width: 100%; min-width: 0; min-height: 46px;
       border: 1px solid #dfd2ca; border-radius: 10px;
       background: #fff; color: #29161e; padding: 12px 14px;
       font: inherit; outline: none;
     }
-    .collection-tools input:focus,
     .collection-tools select:focus {
       border-color: #b88a35; box-shadow: 0 0 0 3px #b88a3522;
     }
     #count { color: #78676d; font-size: 13px; margin: 6px 0 14px; }
     @media(max-width:600px) {
       header { padding: 10px 12px; }
-      .collection-tools { grid-template-columns: 1fr; gap: 9px; }
-      .collection-tools input, .collection-tools select { min-height: 48px; font-size: 16px; }
+      .collection-tools { display: block; }
+      .collection-tools select { min-height: 48px; width: 100%; font-size: 16px; }
       main { padding-left: 14px !important; padding-right: 14px !important; }
     }
   </style>
@@ -106,18 +103,16 @@
 </div>
 
 <main>
-  <div class="collection-tools" aria-label="Search and sort sarees">
-    <input id="sareeSearch" type="search" placeholder="Search by saree name or code..." aria-label="Search sarees">
+  <div class="collection-tools" aria-label="Sort sarees">
     <select id="priceSort" aria-label="Sort sarees by price">
       <option value="default">Sort: Latest first</option>
       <option value="low-high">Price: Low to high</option>
       <option value="high-low">Price: High to low</option>
-      <option value="name">Name: A to Z</option>
     </select>
   </div>
   <div id="count" aria-live="polite"></div>
   <div id="grid" class="products"></div>
-  <p id="noResults" hidden style="padding:24px;text-align:center;color:#78676d;">No sarees match your search.</p>
+  <p id="noResults" hidden style="padding:24px;text-align:center;color:#78676d;">No sarees found in this collection.</p>
 </main>
 
 <script src="cart-header.js"></script>

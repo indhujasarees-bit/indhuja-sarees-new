@@ -14,16 +14,11 @@ let zoomOpen = false;
 let allProducts = [];
 
 function renderProducts() {
-  const search = (document.getElementById("sareeSearch")?.value || "").trim().toLowerCase();
   const sort = document.getElementById("priceSort")?.value || "default";
-  let filtered = allProducts.filter(x => {
-    const haystack = `${x.name || ""} ${x.code || ""} ${x.details || ""}`.toLowerCase();
-    return haystack.includes(search);
-  });
+  let filtered = [...allProducts];
 
   if (sort === "low-high") filtered.sort((a,b) => Number(a.price || 0) - Number(b.price || 0));
   else if (sort === "high-low") filtered.sort((a,b) => Number(b.price || 0) - Number(a.price || 0));
-  else if (sort === "name") filtered.sort((a,b) => String(a.name || "").localeCompare(String(b.name || "")));
   else filtered.sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
   document.getElementById("count").textContent = `${filtered.length} of ${allProducts.length} sarees`;
@@ -55,7 +50,6 @@ async function run() {
   }
   allProducts = p || [];
   renderProducts();
-  document.getElementById("sareeSearch").addEventListener("input", renderProducts);
   document.getElementById("priceSort").addEventListener("change", renderProducts);
 
   // CREATE FULL-SCREEN IMAGE VIEWER
